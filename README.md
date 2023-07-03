@@ -4,7 +4,7 @@
   <a href="https://github.com/pashak09/fixturio/actions">
     <img src="https://github.com/pashak09/fixturio/actions/workflows/ci.yml/badge.svg" alt="test" />
   </a>
-  <a href="https://coveralls.io/github/pashak09/fixturio?branch=main">
+  <a href="https://coveralls.io/github/pashak09/fixturio?branch=master">
     <img src="https://coveralls.io/repos/github/pashak09/fixturio/badge.svg?branch=main" alt="Coverage Status" />
   </a>
   <a href="https://www.npmjs.com/package/fixturio">
@@ -30,6 +30,13 @@ and provide a container that implements the `ServiceContainerInterface` interfac
 important. Dependencies will be injected in the same order they are defined.**
 
 ```ts
+import {
+  FixtureInterface,
+  FixtureBucket,
+  DependencyInjectable,
+  InjectDependency,
+} from 'fixturio';
+
 export class ArticleFixture implements FixtureInterface<unknown>, DependencyInjectable {
   //1, 2
   constructor(
@@ -43,7 +50,7 @@ export class ArticleFixture implements FixtureInterface<unknown>, DependencyInje
     return [ObjectSaver, SomethingElse];
   }
 
-  async install(fixtureSetupBucket: FixtureSetupBucket): Promise<unknown> {
+  async install(fixtureBucket: FixtureBucket): Promise<unknown> {
     //...
   }
 }
@@ -54,20 +61,27 @@ export class ArticleFixture implements FixtureInterface<unknown>, DependencyInje
 To define dependencies between fixture classes, you need to implement the `getFixtureDependencies` method.
 
 ```ts
+import {
+  FixtureInterface,
+  FixtureBucket,
+  DependentFixtureInterface,
+  InjectDependency,
+} from 'fixturio';
+
 //AFixture.ts
 export class AFixture implements FixtureInterface<unknown>, DependentFixtureInterface {
   getFixtureDependencies(): readonly FixtureDependency[] {
     return [BFixture];
   }
 
-  async install(fixtureSetupBucket: FixtureSetupBucket): Promise<unknown> {
+  async install(fixtureBucket: FixtureBucket): Promise<unknown> {
     //...
   }
 }
 
 //BFixture.ts
 export class BFixture implements FixtureInterface<unknown> {
-  async install(fixtureSetupBucket: FixtureSetupBucket): Promise<unknown> {
+  async install(fixtureBucket: FixtureBucket): Promise<unknown> {
     //...
   }
 }
@@ -75,7 +89,7 @@ export class BFixture implements FixtureInterface<unknown> {
 
 ### Examples
 
-More examples can be fond in <a href="https://github.com/pashak09/fixturio/tree/master/examples">examples</a> folder
+More examples can be found in <a href="https://github.com/pashak09/fixturio/tree/master/examples">examples</a> folder
 
 # License
 
