@@ -1,0 +1,30 @@
+name: Update coverage
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  update-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Use Nodejs
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+
+      - name: Install yarn packages
+        run: yarn install --immutable
+
+      - name: Tests coverage
+        run: yarn tests:coverage
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          path-to-lcov: './coverage/lcov.info'
+          github-token: ${{ github.token }}
