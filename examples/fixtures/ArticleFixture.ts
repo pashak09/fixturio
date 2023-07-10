@@ -39,8 +39,8 @@ export class ArticleFixture
     return [UserFixture];
   }
 
-  async install(fixtureSetupBucket: FixtureBucket): Promise<ArticleFixtureResultOf> {
-    const { firstUser, secondUser } = fixtureSetupBucket.fixtureResultOf(UserFixture);
+  async install(fixtureBucket: FixtureBucket): Promise<ArticleFixtureResultOf> {
+    const { firstUser, secondUser } = fixtureBucket.fixtureResultOf(UserFixture);
 
     const firstArticle = new Article(1, firstUser, 'hey');
     const secondArticle = new Article(2, secondUser, 'hey');
