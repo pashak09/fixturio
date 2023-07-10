@@ -21,12 +21,6 @@ jobs:
       - run: yarn install --immutable
       - run: yarn build
 
-      - name: Check if files exist
-        run: |
-          for file in dist/package.json dist/README.md dist/.npmignore; do
-            test -f "$file" || { echo "File $file does not exist in a dist folder"; exit 1; }
-          done
-
-      - run: yarn publish ./dist
+      - run: yarn publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
