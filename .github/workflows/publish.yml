@@ -23,8 +23,9 @@ jobs:
 
       - name: Check if files exist
         run: |
-          test -f package.json || { echo "File package.json does not exist"; exit 1; }
-          test -f README.md || { echo "File README.md does not exist"; exit 1; }
+          for file in dist/package.json dist/README.md dist/.npmignore; do
+            test -f "$file" || { echo "File $file does not exist in a dist folder"; exit 1; }
+          done
 
       - run: yarn publish ./dist
         env:
