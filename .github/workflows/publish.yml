@@ -20,6 +20,10 @@ jobs:
 
       - run: yarn install --immutable
       - run: yarn build
-      - run: yarn publish
+
+      - name: Check if file exists
+        run: test -f package.json || { echo "File package.json does not exist"; exit 1; }
+
+      - run: yarn publish ./dist
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
