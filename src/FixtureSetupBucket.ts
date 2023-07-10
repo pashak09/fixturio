@@ -1,13 +1,5 @@
+import { FixtureResult, Type } from '@app/FixtureBucket';
 import { FixtureInterface } from '@app/index';
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Type<T> = new (...args: any[]) => T;
-
-export type UnPromisify<T> = T extends Promise<infer U> ? U : T;
-
-export type FixtureResult<FixtureType extends FixtureInterface<unknown>> = UnPromisify<
-  ReturnType<FixtureType['install']>
->;
 
 export class FixtureSetupBucket {
   private readonly fixtureResultCache: Record<string, unknown> = {};

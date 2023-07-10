@@ -1,4 +1,6 @@
 *.d.ts
+/*
+!dist/
 !index.d.ts
 !FixtureContainer.d.ts
 !FixtureBucket.d.ts
