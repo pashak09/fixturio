@@ -21,8 +21,10 @@ jobs:
       - run: yarn install --immutable
       - run: yarn build
 
-      - name: Check if file exists
-        run: test -f package.json || { echo "File package.json does not exist"; exit 1; }
+      - name: Check if files exist
+        run: |
+          test -f package.json || { echo "File package.json does not exist"; exit 1; }
+          test -f README.md || { echo "File README.md does not exist"; exit 1; }
 
       - run: yarn publish ./dist
         env:
