@@ -1,6 +1,6 @@
 {
   "name": "fixturio",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Fixtures",
   "keywords": [
     "Persistence",
@@ -15,7 +15,6 @@
   "scripts": {
     "lint": "eslint src",
     "build": "rimraf ./dist && tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
-    "postbuild": "cp package.json README.md .npmignore ./dist",
     "tests": "jest",
     "tests:coverage": "jest --coverage"
   },
@@ -50,7 +49,9 @@
     "node": ">=16.17.0"
   },
   "files": [
-    "**/*.d.ts",
-    "**/*.js"
+    "**/*.js",
+    "dist/FixtureContainer.d.ts",
+    "dist/FixtureBucket.d.ts",
+    "dist/index.d.ts"
   ]
 }

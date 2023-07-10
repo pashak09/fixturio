@@ -1,5 +1,0 @@
-*.d.ts
-!index.d.ts
-!FixtureContainer.d.ts
-!FixtureBucket.d.ts
-__tests__
