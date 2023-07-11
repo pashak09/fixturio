@@ -38,15 +38,16 @@ import {
 } from 'fixturio';
 
 export class ArticleFixture implements FixtureInterface<unknown>, DependencyInjectable {
-  //1, 2
   constructor(
+    //1
     private readonly objectSaver: ObjectSaver,
+    //2
     private readonly somethingElse: SomethingElse
   ) {
   }
 
   getInjectDependencies(): readonly InjectDependency[] {
-    //1, 2
+            //1,             2
     return [ObjectSaver, SomethingElse];
   }
 
@@ -54,6 +55,28 @@ export class ArticleFixture implements FixtureInterface<unknown>, DependencyInje
     //...
   }
 }
+
+//Container.ts
+export class Container implements ServiceContainerInterface {
+    private readonly mapper: Record<string, unknown> = {};
+
+    getService<TInput = unknown, TResult = TInput>(
+        typeOrToken: InjectDependency<TInput> | string
+    ): TResult {
+        return <TResult>this.mapper[typeOrToken.toString()];
+    }
+}
+
+//fixtureLoader.ts
+(async (): Promise<void> => {
+    const fixtureContainer = new FixtureContainer({
+        filePatterns: [join(__dirname, 'fixtures/**/*.ts')],
+        serviceContainer: new Container(),
+    });
+
+    await fixtureContainer.loadFiles();
+    await fixtureContainer.installFixtures();
+})();
 ```
 
 ### Dependencies between fixtures
