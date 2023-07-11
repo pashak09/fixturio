@@ -1,6 +1,6 @@
 {
   "name": "fixturio",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Fixtures",
   "keywords": [
     "Persistence",
@@ -15,6 +15,7 @@
   "scripts": {
     "lint": "eslint src",
     "build": "rimraf ./dist && tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
+    "build:dts": "dts-bundle-generator -o ./dist/index.d.ts ./src/index.ts --project tsconfig.json",
     "tests": "jest",
     "tests:coverage": "jest --coverage"
   },
@@ -31,6 +32,7 @@
     "@types/node": "^18.16.1",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",
+    "dts-bundle-generator": "^8.0.1",
     "eslint": "^8.44.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-prettier": "^8.8.0",
@@ -50,8 +52,6 @@
   },
   "files": [
     "**/*.js",
-    "dist/FixtureContainer.d.ts",
-    "dist/FixtureBucket.d.ts",
-    "dist/index.d.ts"
+    "index.d.ts"
   ]
 }
