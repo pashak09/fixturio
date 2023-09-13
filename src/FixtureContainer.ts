@@ -5,7 +5,8 @@ import { FixtureImporterInterface, ServiceContainerInterface } from '@app/index'
 
 export type FixtureLoadFilters = {
   readonly rootDir: string;
-  readonly tags: readonly string[];
+  readonly filePatterns: readonly string[];
+  readonly tags?: readonly string[] | undefined;
 };
 
 export class FixtureContainer {
@@ -23,8 +24,8 @@ export class FixtureContainer {
 
   async installFixtures(options: FixtureLoadFilters): Promise<LoadAllResult> {
     return this.manager.loadAll(
-      fixtureSifter(await this.importer.import(options.rootDir, options.tags)),
-      options
+      fixtureSifter(await this.importer.import(options.rootDir, options.filePatterns)),
+      options.tags ?? []
     );
   }
 }
