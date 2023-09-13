@@ -4,9 +4,10 @@ export { FixtureContainer } from '@app/FixtureContainer';
 export { FixtureBucket };
 
 export interface FixtureImporterInterface {
-  import(rootDir?: string | undefined): Promise<readonly unknown[]>;
+  import(rootDir: string | undefined, filePatterns: readonly string[]): Promise<readonly unknown[]>;
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export interface InjectDependency<T = unknown> extends Function {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   new (...args: readonly any[]): T;
@@ -38,12 +39,8 @@ export type FixtureInstallOptions = {
   readonly saveOnTagMath: (fn: SaveOnTagsMathFn) => void;
 };
 
-export type FixtureLoadFilters = {
-  readonly tags: readonly string[];
-};
-
 export interface FixtureInterface<ResultType> {
-  install(fixtureSetupBucket: FixtureBucket, options: FixtureInstallOptions): Promise<ResultType>;
+  install(fixtureBucket: FixtureBucket, options: FixtureInstallOptions): Promise<ResultType>;
 }
 
 export interface TaggableInterface {

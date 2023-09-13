@@ -1,18 +1,11 @@
-import { cwd } from 'process';
-
 import { FixtureImporter } from '@app/FixtureImporter';
-import { FixtureManager } from '@app/FixtureManager';
+import { FixtureManager, LoadAllResult } from '@app/FixtureManager';
 import { fixtureSifter } from '@app/fixtureSifter';
-import {
-  FixtureConstructor,
-  FixtureImporterInterface,
-  FixtureLoadFilters,
-  ServiceContainerInterface,
-} from '@app/index';
+import { FixtureImporterInterface, ServiceContainerInterface } from '@app/index';
 
-export type FixtureRootOptions = {
-  readonly filePatterns: readonly string[];
-  readonly serviceContainer?: ServiceContainerInterface | undefined;
+export type FixtureLoadFilters = {
+  readonly rootDir: string;
+  readonly tags: readonly string[];
 };
 
 export class FixtureContainer {
@@ -20,30 +13,18 @@ export class FixtureContainer {
 
   private readonly manager: FixtureManager;
 
-  private fixtures: readonly FixtureConstructor[];
-
   constructor(
-    private readonly options: FixtureRootOptions,
+    serviceContainer?: ServiceContainerInterface | undefined,
     importer?: FixtureImporterInterface | undefined
   ) {
-    this.importer = importer ?? new FixtureImporter(this.options.filePatterns);
-    this.manager = new FixtureManager(options.serviceContainer);
-    this.fixtures = [];
+    this.importer = importer ?? new FixtureImporter();
+    this.manager = new FixtureManager(serviceContainer);
   }
 
-  async loadFiles(rootDir?: string | undefined): Promise<void> {
-    if (this.fixtures.length !== 0) {
-      return;
-    }
-
-    this.fixtures = fixtureSifter(await this.importer.import(rootDir ?? cwd()));
-  }
-
-  async installFixtures(options?: FixtureLoadFilters | undefined): Promise<void> {
-    if (this.fixtures.length === 0) {
-      throw new Error('Fixture files have not been imported yet');
-    }
-
-    await this.manager.loadAll(this.fixtures, options ?? { tags: [] });
+  async installFixtures(options: FixtureLoadFilters): Promise<LoadAllResult> {
+    return this.manager.loadAll(
+      fixtureSifter(await this.importer.import(options.rootDir, options.tags)),
+      options
+    );
   }
 }
