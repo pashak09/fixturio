@@ -51,11 +51,15 @@ export class FixtureManager {
             options.tags.some((tag: string): boolean => fixturesTags.indexOf(tag) >= 0)
           ) {
             await fn();
+            loadedResults.push(installResult);
           }
         },
       });
 
-      loadedResults.push(installResult);
+      if (fixturesTags.length === 0) {
+        loadedResults.push(installResult);
+      }
+
       fixtureSetupBucket.onFixtureResult(fixture, installResult);
     }
 
