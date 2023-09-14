@@ -1,15 +1,14 @@
-import { join } from 'path';
+import { cwd } from 'node:process';
 
 import { FixtureContainer } from '../src';
 
 import { Container } from './container';
 
 (async (): Promise<void> => {
-  const fixtureContainer = new FixtureContainer({
-    filePatterns: [join(__dirname, 'fixtures/**/*.ts')],
-    serviceContainer: new Container(),
-  });
+  const fixtureContainer = new FixtureContainer(new Container());
 
-  await fixtureContainer.loadFiles();
-  await fixtureContainer.installFixtures();
+  await fixtureContainer.installFixtures({
+    rootDir: cwd(),
+    filePatterns: ['fixtures/**/*.ts'],
+  });
 })();

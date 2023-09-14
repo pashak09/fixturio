@@ -57,7 +57,7 @@ export class ArticleFixture implements FixtureInterface<unknown>, DependencyInje
 }
 
 //Container.ts
-export class Container implements ServiceContainerInterface {
+export class AppContainer implements ServiceContainerInterface {
     private readonly mapper: Record<string, unknown> = {};
 
     getService<TInput = unknown, TResult = TInput>(
@@ -69,13 +69,12 @@ export class Container implements ServiceContainerInterface {
 
 //fixtureLoader.ts
 (async (): Promise<void> => {
-    const fixtureContainer = new FixtureContainer({
-        filePatterns: [join(__dirname, 'fixtures/**/*.ts')],
-        serviceContainer: new Container(),
-    });
+    const fixtureContainer = new FixtureContainer(new AppContainer());
 
-    await fixtureContainer.loadFiles();
-    await fixtureContainer.installFixtures();
+    await fixtureContainer.installFixtures({
+      filePatterns: ['fixtures/**/*.ts'],
+      rootDir: path.cwd(),
+    });
 })();
 ```
 

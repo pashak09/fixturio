@@ -1,6 +1,5 @@
 import { FixtureAsserter } from '@app/FixtureAsserter';
 import { FixtureBucket } from '@app/FixtureBucket';
-import { FixtureLoadFilters } from '@app/FixtureContainer';
 import { FixtureOrderResolver } from '@app/FixtureOrderResolver';
 import { FixtureSetupBucket } from '@app/FixtureSetupBucket';
 import {
@@ -28,7 +27,7 @@ export class FixtureManager {
 
   async loadAll(
     constructors: readonly FixtureConstructor[],
-    options: FixtureLoadFilters
+    tags: readonly string[]
   ): Promise<LoadAllResult> {
     const fixtureSetupBucket = new FixtureSetupBucket();
     const fixtureBucket = new FixtureBucket(fixtureSetupBucket);
@@ -48,7 +47,7 @@ export class FixtureManager {
         saveOnTagMath: async (fn: SaveOnTagsMathFn): Promise<void> => {
           if (
             fixturesTags.length > 0 &&
-            options.tags.some((tag: string): boolean => fixturesTags.indexOf(tag) >= 0)
+            tags.some((tag: string): boolean => fixturesTags.indexOf(tag) >= 0)
           ) {
             await fn();
             loadedResults.push(installResult);
