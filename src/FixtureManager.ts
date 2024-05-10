@@ -27,7 +27,7 @@ export class FixtureManager {
 
   async loadAll(
     constructors: readonly FixtureConstructor[],
-    tags: readonly string[]
+    tags: readonly string[],
   ): Promise<LoadAllResult> {
     const fixtureSetupBucket = new FixtureSetupBucket();
     const fixtureBucket = new FixtureBucket(fixtureSetupBucket);
@@ -71,7 +71,7 @@ export class FixtureManager {
       .map((injectDependency: InjectDependency) => {
         if (this.serviceContainer === undefined) {
           throw new Error(
-            `Could not inject ${injectDependency}. You did you provide a serviceContainer ?`
+            `Could not inject ${injectDependency}. You did you provide a serviceContainer ?`,
           );
         }
 
@@ -79,7 +79,7 @@ export class FixtureManager {
 
         if (foundInjectDependency === undefined) {
           throw new Error(
-            `Could not find ${injectDependency}. Did you forget to add ${injectDependency} to your serviceContainer ?`
+            `Could not find ${injectDependency}. Did you forget to add ${injectDependency} to your serviceContainer ?`,
           );
         }
 

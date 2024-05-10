@@ -4,13 +4,13 @@ import { FixtureConstructor, InjectDependency } from '@app/index';
 export class FixtureAsserter {
   assertInjectDependencies(
     fixture: FixtureConstructor,
-    injectDependencies: unknown
+    injectDependencies: unknown,
   ): asserts injectDependencies is readonly InjectDependency[] {
     this.assertArray(injectDependencies, `Dependencies for ${fixture.name} must be an array`);
     this.assertArrayItem(injectDependencies, (injectDependency: unknown): void => {
       if (typeof injectDependency !== 'function' && typeof injectDependency !== 'string') {
         throw new Error(
-          `Unknown fixture inject dependency ${injectDependency} for ${fixture.name}`
+          `Unknown fixture inject dependency ${injectDependency} for ${fixture.name}`,
         );
       }
     });
@@ -18,7 +18,7 @@ export class FixtureAsserter {
 
   assertFixtureDependencies(
     fixture: FixtureConstructor,
-    fixtureDependencies: unknown
+    fixtureDependencies: unknown,
   ): asserts fixtureDependencies is readonly FixtureConstructor[] {
     this.assertArray(fixtureDependencies, `Dependencies for ${fixture.name} must be an array`);
     this.assertArrayItem(fixtureDependencies, (fixtureDependency: unknown): void => {
@@ -45,7 +45,7 @@ export class FixtureAsserter {
 
   private assertArrayItem<T>(
     items: readonly unknown[],
-    fn: (...args: readonly unknown[]) => void
+    fn: (...args: readonly unknown[]) => void,
   ): asserts items is T[] {
     items.forEach(fn);
   }

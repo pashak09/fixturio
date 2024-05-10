@@ -16,7 +16,7 @@ export class FixtureContainer {
 
   constructor(
     serviceContainer?: ServiceContainerInterface | undefined,
-    importer?: FixtureImporterInterface | undefined
+    importer?: FixtureImporterInterface | undefined,
   ) {
     this.importer = importer ?? new FixtureImporter();
     this.manager = new FixtureManager(serviceContainer);
@@ -25,7 +25,7 @@ export class FixtureContainer {
   async installFixtures(options: FixtureLoadFilters): Promise<LoadAllResult> {
     return this.manager.loadAll(
       fixtureSifter(await this.importer.import(options.rootDir, options.filePatterns)),
-      options.tags ?? []
+      options.tags ?? [],
     );
   }
 }

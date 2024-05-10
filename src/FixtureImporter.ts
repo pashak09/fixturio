@@ -8,8 +8,8 @@ export class FixtureImporter implements FixtureImporterInterface {
     const files = await this.matchGlob(rootDir, filePatterns);
     const imported = await Promise.all(
       files.map(
-        async (path: string): Promise<readonly string[]> => Object.values(await import(path))
-      )
+        async (path: string): Promise<readonly string[]> => Object.values(await import(path)),
+      ),
     );
 
     return imported.flat();
@@ -20,7 +20,7 @@ export class FixtureImporter implements FixtureImporterInterface {
       filePatterns.map((pattern: string) => resolve(rootDir, pattern)),
       {
         windowsPathsNoEscape: true,
-      }
+      },
     );
   }
 }

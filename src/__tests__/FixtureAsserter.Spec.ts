@@ -48,7 +48,7 @@ describe('FixtureAsserter', () => {
 
     it('does not throw an error when injectDependencies is a valid array', () => {
       expect(() =>
-        fixtureAsserter.assertInjectDependencies(fixture, ['Test', class {}])
+        fixtureAsserter.assertInjectDependencies(fixture, ['Test', class {}]),
       ).not.toThrow();
     });
   });
@@ -102,7 +102,7 @@ describe('FixtureAsserter', () => {
       ];
 
       expect(() =>
-        fixtureAsserter.assertFixtureDependencies(fixture, fixtureDependencies)
+        fixtureAsserter.assertFixtureDependencies(fixture, fixtureDependencies),
       ).not.toThrow();
     });
   });

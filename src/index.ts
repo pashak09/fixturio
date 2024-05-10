@@ -19,7 +19,7 @@ export interface DependencyInjectable {
 
 export interface ServiceContainerInterface {
   getService<TInput = unknown, TResult = TInput>(
-    typeOrToken: InjectDependency<TInput> | string
+    typeOrToken: InjectDependency<TInput> | string,
   ): TResult;
 }
 
