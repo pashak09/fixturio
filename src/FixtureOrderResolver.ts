@@ -25,7 +25,7 @@ export class FixtureOrderResolver {
   }
 
   private buildDependencyNode(
-    constructors: readonly FixtureConstructor[]
+    constructors: readonly FixtureConstructor[],
   ): readonly DependencyNode[] {
     return constructors.map((item: FixtureConstructor): BuildDependencyNode => {
       return {

@@ -18,7 +18,7 @@ describe('FixtureOrderResolver', () => {
       }
 
       return [];
-    }
+    },
   );
 
   const fixtureOrderResolver = new FixtureOrderResolver(objectDirectorMock);

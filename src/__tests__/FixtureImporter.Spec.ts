@@ -22,7 +22,7 @@ describe('FixtureImporter', () => {
     const instance = new FixtureImporter();
 
     expect(await instance.import(rootFolder, ['src/__tests__/fixtures/Fixture1.ts'])).toMatchObject(
-      [Fixture1]
+      [Fixture1],
     );
   });
 
